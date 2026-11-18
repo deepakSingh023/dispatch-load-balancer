@@ -1,6 +1,7 @@
 package com.deepaksingh023.dispatch.entity;
 
 
+import com.deepaksingh023.dispatch.enums.OrderStatus;
 import com.deepaksingh023.dispatch.enums.Priority;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,5 +37,9 @@ public class Order {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Priority priority;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
 }

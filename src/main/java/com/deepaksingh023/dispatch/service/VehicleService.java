@@ -50,7 +50,7 @@ public class VehicleService {
             vehiclesToBeSaved.add(vehicle);
         }
 
-        vehicleRepository.saveAll(vehiclesToBeSaved);
+        vehicleRepository.bulkUpsert(vehiclesToBeSaved);
 
         return new VehicleSaveResponse("Vehicles saved successfully" , Status.SUCCESS);
 
