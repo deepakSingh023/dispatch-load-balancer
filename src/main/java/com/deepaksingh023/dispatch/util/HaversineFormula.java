@@ -1,5 +1,8 @@
 package com.deepaksingh023.dispatch.util;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class HaversineFormula {
 
     private static final double EARTH_RADIUS_KM = 6371.0;
@@ -21,8 +24,6 @@ public class HaversineFormula {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return EARTH_RADIUS_KM * c;
-
-
 
     }
 }

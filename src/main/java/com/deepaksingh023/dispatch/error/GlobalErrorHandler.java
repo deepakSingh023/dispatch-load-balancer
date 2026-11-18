@@ -3,6 +3,7 @@ package com.deepaksingh023.dispatch.error;
 
 import com.deepaksingh023.dispatch.dto.ErrorResponse;
 import com.deepaksingh023.dispatch.error.exceptions.DuplicateOrderIdException;
+import com.deepaksingh023.dispatch.error.exceptions.DuplicateVehicleException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,5 +46,17 @@ public class GlobalErrorHandler {
 
     }
 
+    @ExceptionHandler(DuplicateVehicleException.class)
+    public ResponseEntity<ErrorResponse> duplicateVehicleIdExceptionHandler(DuplicateVehicleException ex){
+        ErrorResponse errorResponse = new ErrorResponse(
+                "DUPLICATE_VEHICLE_ID",
+                "The request contains duplicate vehicleIds",
+                null,
+                Instant.now()
+        );
+
+        return ResponseEntity.badRequest().body(errorResponse);
+
+    }
 
 }

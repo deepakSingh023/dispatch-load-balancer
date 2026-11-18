@@ -31,7 +31,7 @@ public class Order {
     private String address;
 
     @Column(nullable = false)
-    private Double packageWeight;
+    private Integer packageWeight;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

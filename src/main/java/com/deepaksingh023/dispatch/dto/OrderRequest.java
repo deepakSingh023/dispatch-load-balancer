@@ -23,7 +23,7 @@ public record OrderRequest(
 
         @NotNull
         @Positive
-        Double packageWeight,
+        Integer packageWeight,
 
         @NotNull
         Priority priority
