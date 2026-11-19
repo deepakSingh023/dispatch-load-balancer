@@ -8,6 +8,7 @@ import com.deepaksingh023.dispatch.entity.Vehicle;
 import com.deepaksingh023.dispatch.enums.Status;
 import com.deepaksingh023.dispatch.error.exceptions.DuplicateVehicleException;
 import com.deepaksingh023.dispatch.repository.VehicleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+
+@Slf4j
 @Service
 public class VehicleService {
 
@@ -50,8 +53,11 @@ public class VehicleService {
             vehiclesToBeSaved.add(vehicle);
         }
 
+        log.info("Total no of vehicles Added {}" , vehiclesToBeSaved.size());
+
         vehicleRepository.bulkUpsert(vehiclesToBeSaved);
 
+        log.info("Vehicles saved in DB successfully");
         return new VehicleSaveResponse("Vehicles saved successfully" , Status.SUCCESS);
 
     }

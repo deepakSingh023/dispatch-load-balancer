@@ -1,12 +1,13 @@
 package com.deepaksingh023.dispatch.controller;
-
-
-import com.deepaksingh023.dispatch.dto.DispatchPlan;
+import com.deepaksingh023.dispatch.dto.FullResponse;
+import com.deepaksingh023.dispatch.dto.PlanResponse;
 import com.deepaksingh023.dispatch.service.DispatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/dispatch/")
@@ -19,10 +20,10 @@ public class DispatchController {
     }
 
     @GetMapping("/plan")
-    public ResponseEntity<DispatchPlan> returnDispatchPlan(){
+    public ResponseEntity<FullResponse> returnDispatchPlan(){
 
-        DispatchPlan response = dispatchService.sendDispatchPlan();
+         FullResponse res = dispatchService.sendDispatchPlan();
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(res);
     }
 }

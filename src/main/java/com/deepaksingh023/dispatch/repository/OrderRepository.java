@@ -10,7 +10,4 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order,String>,OrderRepositoryInterface {
 
-    @Query("SELECT o FROM Order o WHERE o.orderStatus = com.deepaksingh023.dispatch.enums.OrderStatus.UN_ASSIGNED")
-    List<Order> getUnassignedOrders();
-
 }

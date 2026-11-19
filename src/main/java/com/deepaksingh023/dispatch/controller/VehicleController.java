@@ -24,10 +24,10 @@ public class VehicleController {
 
     @PostMapping("/vehicles")
     public ResponseEntity<VehicleSaveResponse> saveVehicles(
-            @RequestBody @Valid VehicleList vehicleList
+            @RequestBody @Valid VehicleList vehicles
             ){
 
-        VehicleSaveResponse vehicleSaveResponse = vehicleService.saveVehicles(vehicleList);
+        VehicleSaveResponse vehicleSaveResponse = vehicleService.saveVehicles(vehicles);
 
         return ResponseEntity.ok(vehicleSaveResponse);
 

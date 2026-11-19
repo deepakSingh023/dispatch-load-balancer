@@ -19,16 +19,15 @@ public class OrderRepositoryInterfaceImpl implements OrderRepositoryInterface{
     public void bulkUpsert(List<Order> orders){
 
         String query = """
-                INSERT INTO orders_table(order_id,latitude,longitude,address , package_weight , priority,order_status)
-                VALUES(?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO orders_table(order_id,latitude,longitude,address , package_weight , priority)
+                VALUES(?, ?, ?, ?, ?, ?)
                 ON CONFLICT(order_id)
                 DO UPDATE SET
                    latitude = EXCLUDED.latitude,
                    longitude = EXCLUDED.longitude,
                    address = EXCLUDED.address,
                    package_weight = EXCLUDED.package_weight,
-                   priority = EXCLUDED.priority,
-                   order_status = EXCLUDED.order_status
+                   priority = EXCLUDED.priority
                 """;
 
         jdbcTemplate.batchUpdate(query,orders,500,(ps, order) ->{
@@ -39,7 +38,6 @@ public class OrderRepositoryInterfaceImpl implements OrderRepositoryInterface{
             ps.setString(4,order.getAddress());
             ps.setObject(5,order.getPackageWeight());
             ps.setString(6,order.getPriority().name());
-            ps.setString(7,order.getOrderStatus().name());
 
         });
 

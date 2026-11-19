@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface VehicleRepository extends JpaRepository<Vehicle,String>,VehicleRepositoryInterface{
 
-    @Query(value = "SELECT v FROM Vehicle v")
+    @Query(value = "SELECT v FROM Vehicle v ORDER BY v.vehicleId ASC")
     List<Vehicle> getAllVehicles();
 }
