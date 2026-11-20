@@ -3,6 +3,7 @@ package com.deepaksingh023.dispatch;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.deepaksingh023.dispatch.controller.OrderController;
 import com.deepaksingh023.dispatch.service.OrderService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -11,6 +12,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
@@ -64,7 +66,7 @@ public class OrderControllerTest {
     }
 
     @Test
-    void shouldThrowExceptionOnMalformedDataTest() throws Exception{
+    void shouldThrowExceptionOnMissingDataTest() throws Exception{
 
         String input = """
             {
@@ -79,7 +81,7 @@ public class OrderControllerTest {
                      "orderId": "ORD002",
                      "latitude": 13.0827,
                      "address": "Anna Salai, Chennai, Tamil Nadu, India",
-                     "packageWeight": 20,
+                     "packageWeight": 20
 
                  }
                ]
@@ -88,10 +90,45 @@ public class OrderControllerTest {
 
         mockMvc.perform(post("/api/dispatch/orders")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(input)).andExpect(status().isBadRequest());
+                .content(input)).andExpect(status().isBadRequest()).andReturn();
 
         Mockito.verifyNoInteractions(orderService);
 
+
+    }
+
+    @Test
+    void shouldThrowErrorOnWrongData() throws Exception{
+
+        String input = """
+            {
+                "orders": [
+                 {
+                    "orderId": "ORD001",
+                    "latitude": "Mock"
+                    "longitude": 77.5946,
+                    "address": "MG Road, Bangalore, Karnataka, India",
+                    "packageWeight": 10,
+                    "priority": 20
+                 },
+                 {
+                     "orderId": "ORD002",
+                     "latitude": 13.0827,
+                     "longitude": 80,
+                     "address": 20,
+                     "packageWeight": 20,
+                     "priority": "MEDIUM"
+                 }
+               ]
+            }
+        """;
+
+
+        mockMvc.perform(post("/api/dispatch/orders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(input)).andExpect(status().isBadRequest());
+
+        Mockito.verifyNoInteractions(orderService);
 
     }
 
