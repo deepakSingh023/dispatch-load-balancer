@@ -9,7 +9,7 @@ A Java Spring Boot service which assign orders to vehicle using priority, capaci
 ## Tech Stack & Architecture
 - **Backend:** Java 21, Spring Boot, Spring Web, Spring Validation, Spring JDBC (`JdbcTemplate` for batch upserts)
 - **Database:** PostgreSQL (Supabase)
-- **API Docs & Testing:** Springdoc OpenAPI (Swagger UI), JUnit 5, Mockito, MockMvc
+- **API Docs & Testing:** Spring doc OpenAPI (Swagger UI), JUnit 5, Mockito, MockMvc
 - **Architecture:** Clean design (`Controller` -> `Service` -> `Repository`) with separate DTOs for request/response, Proper Validation, and centralized exception handling.
 
 ## What It Does
@@ -90,7 +90,7 @@ Note: the delete call wipes all orders and vehicles.
 
 ## Error Handling
 - Every error use the same response shape: an error code, a message and a timestamp.
-- Field validation failures return the code `VALIDATION_FAILED`, with the failing fields listed.
+- Field validation failures return the code `VALIDATION_FAILED`.
 - Repeated ids return `DUPLICATE_ORDER_ID` or `DUPLICATE_VEHICLE_ID`.
 - Requesting a plan with no orders or no vehicles returns a clear message.
 
@@ -116,10 +116,10 @@ Note: the delete call wipes all orders and vehicles.
 - Vehicle and Order service tests cover duplicate id and service working test. While service Controller test the missing field and wrong value types.
 
 ## Limitations and Next Steps
-- The result is a greedy heuristic. Stops follow assignment order, so a vehicle can double back. Reordering each vehicle's stops by nearest neighbour would cut distance without changing who carries what.
+- The result is a greedy heuristic. Stops follow assignment order, so a vehicle can double back. Reordering each vehicle's stops by nearest neighbors would cut distance without changing who carries what.
 - There is only a single constant reason for not assigned so adding a dynamic reasoning for each order unassigned would be better.
 - The delete endpoint has no authentication and work on global dataset so everything gets wiped.
 - One global dataset mean every user gets the same plan and mix up can happen so should scope it by user ir session.
-- A write and plan calls at the same time could mix up data due to the write to either order or vehicle mixing up with data.
+- A write and plan calls at the same time could mix up data due to the writes to either order or vehicle mixing up with data.
 - Vehicle ids are sorted as text to provide the same order everytime, so `VEH10` can sort before `VEH2`.
 - Requests are processed on demand so we can process very large processing background to reduce the latency of plan.
